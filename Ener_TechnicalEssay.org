@@ -19,18 +19,6 @@
   + or both
   +
 :END:
-* tools :noexport:
-** Imports/Boilerplate
-#+NAME: imports
-#+BEGIN_SRC jupyter-python :session test
-import numpy as np
-import matplotlib.pyplot as plt
-import pandas as pd
-plt.rcParams['figure.dpi'] = 300
-#+End_src
-
-#+RESULTS: imports
-
 * Introduction
 :notes:
 - Discuss the implications of a truly zero carbon grid
@@ -84,7 +72,7 @@ Impact on grid
   + quantify the expected ROCOF? based on projected nuclear spinning reserve
 - Much more error in forecasts more freq
 :END:
-* LCOE
+* Levelized Cost of Electricity (LCOE)
 *** What is LCOE
 Since we have established
 Levelized cost of electricity (LCOE) is defined simply as the total cost of building, running and decommissioning an energy generation asset divided by it's lifetime generation cost.
@@ -94,8 +82,14 @@ LCOE = \frac{\text{Lifetime Cost (\$)}}{\text{Lifetime Production (KWh)}}
 \end{align}
 
 This is a vital metric for comparing the cost effectiveness and profitability of a given generation source. By accounting for profit margins and transmission/distribution use of system fees, this metric may also give a very rough insight into the likely end cost of energy to the consumer assuming a relatively competitive energy market.
+*** LCOE Breakdown by generation Type <<LCOEBreakdown>>
+#+caption: Levelized cost Estimates for Projects commissioning in 2025, £/MWh (Data is sourced from UK Government Figures Published in 2020[[cite:&DeptEnerLCOE]])
+#+NAME: figLCOEbreakdown
+#+RESULTS: pltBarLCOEBreakdown
+[[file:./.ob-jupyter/8db2ae3ea8d23f67cdfb46f0d78029d25fe124bc.png]]
 
-*** LCOE by generation Type
+*** LCOE vs Capacity factor
+Choosing the optimal energy strategy is not simply a case of electing the lowest LCOE since the LCOE itself will be a function of the capacity factor. This can be seen from Equation ref:eqLCOE since energy generated grows as a function of
 
 * Zero carbon Energy Mix
 Forecasting the future energy mix is the subject of extensive debate and is sensitive to a huge variety of unpredictable factors and unknowns such as government policy, geopolitical developments, to disruptive technologies. This analysis however starts with the assumption that the UK grid is indeed to be truly decarbonized and attempts to reason how this might look with current technologies. In this section will investigate which combination of technologies would likely provide the bulk of energy. The technologies considered here will simply be based on the current dominant sources of renewable and zero carbon energy on the UK grid shown in Figure ref:figPie2020CumGen as the only other dominant zero carbon energy source.
@@ -142,7 +136,7 @@ A breakdown of the various technologies that constitute biomass energy is shown 
 
 Other biomass technology will not be considered in this report due to it's expected low future utilization.
 
-#+caption: Breakdown of "biomass" energy by type based on UK government data [[cite:&RenewableElecricityCap]][fn::For tabular data see Section ref:secAppBiomassWasteEner]
+#+caption: Breakdown of "biomass" energy by type based on UK government data [[cite:&RenewableElecricityCap]] (For tabular data see Section ref:secAppBiomassWasteEner)
 #+NAME: figPie2020BiomassBreakdown
 #+results: pltPie2020BiomassBreakdown
 [[file:./.ob-jupyter/603c0a61cc39a759145c8c2636878e943182f773.png]]
@@ -262,6 +256,24 @@ When considered from the point of view of the electrical energy network, these t
 *** Synchronous Condensers
 
 * Appendices
+** tools :noexport:
+*** Imports/Boilerplate
+#+NAME: imports
+#+BEGIN_SRC jupyter-python :session test
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+plt.rcParams['figure.dpi'] = 300
+#+End_src
+
+#+RESULTS: imports
+*** Function =ReadTable2DF()=
+#+NAME: funReadTab2DF
+#+BEGIN_SRC jupyter-python :session test
+
+#+End_src
+
+#+RESULTS: funReadTab2DF
 ** Breakdown of a consumer energy bill
 
 #+Name: pltPieBillBreakdown
@@ -273,7 +285,7 @@ ax1.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
 ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 plt.show()
 #+End_src
-
+#+ATTR_LATEX: :placement [H] :booktabs t :font \footnotesize
 #+caption: Ofgem Estimated components of customer's energy bills from Ofgem [[cite:&ofgemBillBreakdown]]
 #+NAME: tabBillBreakdown
 |   | VAT  | Wholesale Price | Network Costs | Other Costs | Environmental/social obligation | Operating Costs |
@@ -282,36 +294,71 @@ plt.show()
 |   | 4.76 | 29.28           | 23.37         | 2.09        | 25.48                           | 16.34           |
 ** Breakdown of Levelized cost estimates
 *** UK Gov data 2016
-#+ATTR_LATEX: placement [H] :booktabs t:
-#+caption: Levelized cost Estimates for Projects commissioning in 2025, Technology specifiic Hurdle Rates, £/MWh (Data is sourced from UK Govenment Figures Published in 2016)
+This Data is sourced from the UK Government Department of Business, Energy & industrial Strategy's 2020 Electricity generation Cost 2016 Report Table 4 (pg 27) [[cite:&DeptEnerLCOE2016]].
+#+ATTR_LATEX: :placement [H] :booktabs t :float sidewaystable :font \tiny
+#+caption: Levelized cost Estimates for Projects commissioning in 2025, £/MWh (Data is sourced from UK Government Figures Published in 2016[[cite:&DeptEnerLCOE]])
 #+NAME: tabLCOEBreakdownGov2016
-|   | Nuclear PWR -FOAK     | Coal - ASC with | oxy comb. CCS -FOAK | CCGT with post comb. CCS - FOAK | Coal - IGCC with CCS - FOAK | CCGT H Class | OCGT 600MW (500hrs) | Offshore R3 | Large Scale Solar PV | Onshore 5MW |
-|---+-----------------------+-----------------+---------------------+---------------------------------+-----------------------------+--------------+---------------------+-------------+----------------------+-------------|
-| / | Nuclear PWR -FOAK     | Coal - ASC with | oxy comb. CCS -FOAK | CCGT with post comb. CCS - FOAK | Coal - IGCC with CCS - FOAK | CCGT H Class | OCGT 600MW (500hrs) | Offshore R3 | Large Scale Solar PV | Onshore 5MW |
-|   | Pre Development Costs |               7 |                   2 |                               2 |                           2 |            0 |                   5 |           5 |                    6 |           4 |
-|   | Construction Costs    |              66 |                  72 |                              41 |                          78 |            7 |                  63 |          69 |                   49 |          42 |
-|   | Fixed O&M             |              11 |                  11 |                               5 |                          12 |            2 |                  17 |          23 |                    8 |          10 |
-|   | Variable O&M          |               5 |                   6 |                               3 |                           5 |            3 |                   3 |           3 |                    0 |           5 |
-|   | Fuel Costs            |               5 |                  24 |                              48 |                          26 |           40 |                  60 |           0 |                    0 |           0 |
-|   | Carbon Costs          |               0 |                   6 |                               3 |                           8 |           29 |                  43 |           0 |                    0 |           0 |
-|   | CCS Costs             |               0 |                  17 |                               7 |                          18 |            0 |                   0 |           0 |                    0 |           0 |
-|   | Decommissioning/Waste |               2 |                   0 |                               0 |                           0 |            0 |                   0 |           0 |                    0 |           0 |
-|   | Total                 |              95 |                 136 |                             110 |                         148 |           82 |                 189 |         100 |                   63 |          61 |
+|                                          | Nuclear PWR | Coal - ASC with oxy |   CCGT with post | Coal - IGCC with |    CCGT | OCGT 600MW |    Offshore | Large Scale | Onshore |
+|                                          |       -FOAK |     comb. CCS -FOAK | comb. CCS - FOAK |       CCS - FOAK | H Class |   (500hrs) |          R3 |    Solar PV |     5MW |
+|------------------------------------------+-------------+---------------------+------------------+------------------+---------+------------+-------------+-------------+---------|
+| Tag                                      |     Nuclear |        Coal ASC+CCS |         CCGT+CCS |    Coal-IGCC+CCS |  CCGT H | OCGT 600MW | Wind Off R3 | Solar PV LS | Wind On |
+| Pre-Development Costs                    |           7 |                   2 |                2 |                2 |       0 |          5 |           5 |           6 |       4 |
+| Construction Costs                       |          66 |                  72 |               41 |               78 |       7 |         63 |          69 |          49 |      42 |
+| Fixed O&M                                |          11 |                  11 |                5 |               12 |       2 |         17 |          23 |           8 |      10 |
+| Variable O&M                             |           5 |                   6 |                3 |                5 |       3 |          3 |           3 |           0 |       5 |
+| Fuel Costs                               |           5 |                  24 |               48 |               26 |      40 |         60 |           0 |           0 |       0 |
+| Carbon Costs                             |           0 |                   6 |                3 |                8 |      29 |         43 |           0 |           0 |       0 |
+| CO2 Transport and Storage [fn:transport] |           0 |                  17 |                7 |               18 |       0 |          0 |           0 |           0 |       0 |
+| Decommissioning and Waste                |           2 |                   0 |                0 |                0 |       0 |          0 |           0 |           0 |       0 |
+| Total                                    |          95 |                 136 |              110 |              148 |      82 |        189 |         100 |          63 |      61 |
 
+:footnotes:
+[fn:transport] This name has been changed to from 'CCS cost' for compatibility with Table ref:tabLCOEBreakdownGov2020.
+:END:
 *** UK Gov Data 2020
-| CCGT H | Class | Offshore | Wind | Onshore | Wind | Large- | Scale | Solar | CCGT + CCS Post | Combustion | (FOAK) |
+This Data is sourced from the UK Government Department of Business, Energy & industrial Strategy's 2020 Electricity generation Cost 2020 Report Table 4.3 (pg 26) [[cite:&DeptEnerLCOE]][fn:tabBiomass].
+#+ATTR_LATEX: :placement [H] :booktabs t :float sidewaystable
+#+caption: Levelized cost Estimates for Projects commissioning in 2025, £/MWh (Data is sourced from UK Government Figures Published in 2020[[cite:&DeptEnerLCOE]])
+#+NAME: tabLCOEBreakdownGov2020
+|                           | Offshore | Onshore Wind | CCGT H |     CCGT+CCS Post | Large-Scale | Dedicated Biomass |
+|                           |     Wind |         Wind |  Class | Combustion - FOAK |       Solar |   [fn:tabBiomass] |
+|---------------------------+----------+--------------+--------+-------------------+-------------+-------------------|
+| Tag                       | Wind Off |      Wind On | CCGT H |          CCGT+CCS |       Solar |           Biomass |
+| Pre-Development Costs     |        3 |            3 |      1 |                 0 |           3 |                 2 |
+| Construction Costs        |       31 |           27 |      7 |                23 |          30 |                39 |
+| Fixed O&M                 |       19 |           10 |      2 |                 4 |          10 |                13 |
+| Variable O&M              |        3 |            6 |      4 |                 5 |           0 |                 9 |
+| Fuel Costs                |        0 |            0 |     40 |                45 |           0 |                35 |
+| Carbon Costs              |        0 |            0 |     32 |                 3 |           0 |                 0 |
+| CO2 Transport and Storage |        0 |            0 |      0 |                 4 |           0 |                 0 |
+| Decommissioning and waste |        1 |            0 |      0 |                 0 |           0 |                 0 |
+| Total                     |       57 |           46 |     85 |                85 |          44 |                98 |
 
-| Pre-Development Costs               |  <1 |  3 |  3 |  3 | <1 |   |   |
-| Construction Costs                  |   7 | 31 | 27 | 30 | 23 |   |   |
-| Fixed  O&M   |   2 | 19 | 10 | 10 |  4 |   |   |
-| Variable  O&M   |   4 |  3 |  6 |  0 |  5 |   |   |
-| Fuel                          Costs |  40 |  0 |  0 |  0 | 45 |   |   |
-| Carbon                        Costs |  32 |  0 |  0 |  0 |  3 |   |   |
-| CO2  Transport  and  Storage        |   0 |  0 |  0 |  0 |  4 |   |   |
-| Decommissioning                     | and |    |    |    |    |   |   |
-| waste                               |   0 |  1 |  0 |  0 |  0 |   |   |
-| Total                               |  85 | 57 | 46 | 44 | 85 |   |   |
+
+:footnotes:
+[fn:tabBiomass] Biomass data is appended from Table 8 in Annex 1: Additional Estimates[[cite:&DeptEnerLCOE]].
+:END:
+*** Process Data
+#+NAME: pltBarLCOEBreakdown
+#+BEGIN_SRC jupyter-python :session test :var data2016=tabLCOEBreakdownGov2016 data2020=tabLCOEBreakdownGov2020 :exports both
+df_LCOE_2020 = pd.DataFrame(data2020).iloc[3:, :]
+df_LCOE_2020.columns = data2020[2]
+
+df_LCOE_2016 = pd.DataFrame(data2016).iloc[3:, :]
+df_LCOE_2016.columns = data2016[2]
+# display(df_LCOE_2016)
+df_LCOE_2016 = df_LCOE_2016["Nuclear"]
+df_LCOE_2Plot = pd.concat([df_LCOE_2020,df_LCOE_2016],axis=1, join="inner")
+df_LCOE_2Plot=df_LCOE_2Plot.set_index("Tag").T
+df_LCOE_2Plot = df_LCOE_2Plot.drop('Total',axis=1)
+
+ax = df_LCOE_2Plot.plot.bar(stacked=true,rot=70,figsize=(11,6))
+ax.set_ylabel("£/KWh")
+ax=ax.legend(loc=2)
+#+End_src
+
 ** Energy Mix
+#+ATTR_LATEX: :placement [H] :booktabs t
 #+caption:  Breakdown of UK renewable energy production in GWh for the year 2020-2021 based on UK government data [[cite:&RenewableElecricityCap]]
 #+NAME: tabUkGreenEnergy2020
 |   |         | Solar PV |     Wind |   Hydro |  Biomass | Nuclear | wave / tidal |     total |
@@ -331,7 +378,7 @@ ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 plt.show()
 #+End_src
 ** Biomass/Waste Energy Breakdown <<secAppBiomassWasteEner>>
-#+ATTR_LATEX: placement [H] :booktabs t:
+#+ATTR_LATEX: :placement [H] :booktabs t :font \tiny
 #+caption: Breakdown of Energy generated from Biomass/Waste (GWh) according to UK government data [[cite:&RenewableElecricityCap]]
 #+NAME: tabBiomassBreakdown
 |     | Landfill gas | Sewage digestion | Energy from waste | Animal Biomass | Anaerobic Digestion |           Plant Biomass | Total |
