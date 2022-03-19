@@ -72,6 +72,19 @@ Impact on grid
   + quantify the expected ROOF? based on projected nuclear spinning reserve
 - Much more error in forecasts more freq
 :END:
+* Current UK Energy Mix <<secCurrentUkEnergyMix>>
+In 2020 UK annual electricity consumption was \approx =312TW=. Of this, roughly \approx =59.6%= was generated from inherently carbon neutral sources (Nuclear/Renewables). Annual UK demand is broken down by generation technology in Figure ref:figPie2020CumGen, carbon neutral energy generation is shown by relative energy generation in Figure ref:figPie2020CumGen.
+#+Name: figPie2020CumGen
+#+caption: Breakdown of UK energy Demand (Wave/tidal Excluded due to low scale) in GWh for the year 2020-2021 based on UK government data [[cite:&RenewableElecricityCap]]
+#+RESULTS: pltPie2020EnergyMix_All
+[[file:./.ob-jupyter/d64e0616e62f30eaf8d209e99c92063a7253412a.png]]
+
+
+#+Name: figPie2020CumGen
+#+caption: Breakdown of UK zero carbon energy production (Wave/tidal Excluded due to low scale) in GWh for the year 2020-2021 based on UK government data [[cite:&RenewableElecricityCap]]
+#+RESULTS: figPie2020CumGen
+[[file:./.ob-jupyter/9d5f54f66e0860cfcadd03202a7835f8eee375c2.png]]
+
 * Capacity Factor (CF)
 Capacity factor [fn::Also known as load factor] is defined as the total energy generated over a period of time divided by the theoretical maximum as specified by it's nameplate rating.
 
@@ -128,6 +141,11 @@ Examining ref:eqLCOE_5_final see that generators trying to minimise LCOE roughly
 [fn:assumptions] It should be noted here that this is a very high-level analysis with many implicit assumptions, among them the assumption of fixed lifetime for a given generation type : This means that OEM costs which are roughly speaking a function of lifetime and capacity factor can be considered fixed costs.
 [fn:LCOEassumptions] This ignores of course all of the other ancillary service which may be supplied on top of just energy.
 :END:
+*** Seasonality Vs LCOE <<secSeasonalityVsLSCO>>
+The effect of seasonal variation on LCOE, can be derived by inspection of Equation ref:eqLCOE_5_final. To meet demand one must size capacity according to the peak demand effectively setting \(C_{Fixed}\) and \(S_{Base}\). One may assume these are linear with another so this has no impact on the LCOE. When the minimum in demand is substantially lower than the peak however, it necessarily lowers the system wide capacity factor and thus also increases the LCOE.
+
+It should be noted here that where fuel is a dominant factor in the LCOE, there is less sensitivity to this lower capacity factor on the other hand, renewable generation is effectively inverse linearly dependant on CF.
+
 * Future Space Heating Demand <<secHeating>>
 A critical challenges in the transition to net zero is decarbonising residential space heating. As of Tue, 15/03/22 the future of heating in the UK is still very unclear. Until recently the UK has relied on the abundant gas reserves of the north sea for the vast majority of it's heating needs. These reserves however are dwindling, and beyond being in carbon intensive, depending in imported natural gas is expected to incur increasing cost, not to mention poses a geopolitical vulnerability. It is thus no surprise that decarbonising heating has received substantial attention from the government.
 
@@ -158,16 +176,59 @@ From Figure ref:figNatualGassDemandBreakdown It is noted that this sector, thoug
 [[file:./.ob-jupyter/059e5607973df26cf3fa1f5f9cae00619ccdfac7.png]]
 
 ** Electrical Characteristics of Hydrogen Scenario
-In the case of the large scale Hydrogen network, at least as much energy must be supplied electrically to the electrolyser producing the hydrogen fuel, as will be used by the consumer to heat. Since current alkaline fuel cell technology such as Cummin's HYDRLYZER can attain up to 70% efficiency [[cite:&CuminsElectrolizer]] and there will be other energy losses due to compression and leakage [fn::Hydrogen tends to be substantially more leaky due to it's atomic size], we may safely assume that the electrical energy required per unit thermal energy used will be at least \approx =1.5=.
+This section will briefly examine the implications of de-carbonisation of space heating using a purely hydrogen base approach.
 
-The key advantage of this scenario is of course the greater ease of storage[[cite:&HydrogenEnergyStorag2]]. As such demand can be assumed to be dis-patchable to a certain degree, as long as the correct net energy is delivered.
-
+*** Hydrogen Energy Storage
+The key advantage of hydrogen is of course the greater ease of storage[[cite:&HydrogenEnergyStorag2]]. As such demand can be assumed to be dis-patchable to a certain degree, as long as the correct net energy is delivered. The option is also being discussed to attach
 
 :notes:
 - only used in a very subsidised form as energy storage... even still though it is probably just easier to store that for electricity usage
 :END:
-** Electrical Characteristics of Heat pump Scenario
+*** Hydrogen Heating Electrical Energy Requirements
+In the case of the large scale Hydrogen network, at least as much energy must be supplied electrically to the electrolyser producing the hydrogen fuel, as will be used by the consumer to heat. Since current alkaline fuel cell technology such as Cummin's HYDRLYZER can attain up to 70% efficiency [[cite:&CuminsElectrolizer]] and there will be other energy losses due to compression and leakage [fn::Hydrogen tends to be substantially more leaky due to it's atomic size], we may safely assume that the electrical energy required per unit thermal energy used will be at least \approx =1.5=.
 
+Base on the current Natural gas space heating consumption inferred in Section ref:secCurrentNatGasDemand, we can estimate the expected future demand assuming a full adoption of this technology [fn:hydrogenSpcHeatingAssumptions].
+
+#+NAME: eqFutureSpcHeatingDemand
+\begin{align}
+E_{Heating\;Electrical\;(kWh)} = 1.5\times E_{Heating\;Nat\;Gas (kWh)}
+\end{align}
+
+This yields and expected additional annual electrical load of \approx =565 TWh=, roughly =181%= of the current annual electrical demand of \approx =312 TWh=. Restated, this would require an almost tripling in the UK's electrical energy generation capacity.
+:footnotes:
+[fn:hydrogenSpcHeatingAssumptions] This analysis is of course greatly simplified and makes a great many simplifying assumptions for instance: It is assumed that (despite plans to the contrary by the UK government) the space heating energy demand of the nation will remain roughly constant, though changes in building legislation aim to improve this on a per capita basis. This legislation will only be adopted in 2025, and then only apply to new builds, further more projections of the UK population grow forecast a rise of roughly 6.9% by 2030. It seems likely therefore that for the foreseeable future, this demand will not deviate enough to invalidate this analysis.
+:END:
+
+** Electrical Characteristics of Heat pump Scenario
+*** Coefficient of performance
+The coefficient of performance (COP) of a heat pump is defined as the ratio of useful heating to input energy.
+
+#+NAME: eqCOPDef
+\begin{align}
+COP &= \frac{|Q_H|}{E_{in}} = \frac{Q_C+E_{in}}{E_{in}}\\
+E_{in} &= \frac{Q_H}{COP}
+\end{align}
+
+Where \(Q_C\) is the heat moved from the cold reservoir \(Q_H\), is the total useful heating energy and \(E_{in}\) is the input energy.
+
+Typical heat-pumps have COP in the range of 2-4 though the minimum to qualify for UK incentives is =2.9= this figure will be used as a base case in the subsequent analysis though it is expected that this figure will improve.
+
+*** Heat-pump Electrical Energy Requirements
+Again using the figure for annual UK space heating demand derived in Section ref:secCurrentNatGasDemand (=565 TWh=) and Equation ref:eqCOPDef, we can estimate the additional electrical requirement as \approx =195 TWh=, roughly =62%= of the current annual UK energy consumption. Note that this is not simply a case of adding an additional 62% capacity, to the network due to the substantial seasonal variability in natural gas demand that will be discussed in Section ref:secSpaceHeatingVariablity.
+
+** Seasonality of Demand <<secSpaceHeatingVariablity>>
+A key characteristic of heating demand however is it's inherent seasonality (shown in ref:figHeatingSeasonality) with peaks in demand often in excess of 5 times the minimum summer demand. This is a highly variable demand relative to the relatively stable variations in Electrical demand. Even with the factor of 2.9 reduction gained through the use of the heat pump, it is clear just by inspection of Figure ref:figHeatingSeasonality, that this seasonal spike in demand will require substantially more than just an increase in capacity of 62%.
+
+#+caption: Total daily GB Natural gas and Electricity usage, 29_th Sept 2010 - 20_th Jan 2013, (Source:[[cite:&ukNatGasAndElecConsumption]])
+#+NAME: figHeatingSeasonality
+[[file:Figures/SeasonalEnergyVariation.jpg]]
+
+
+** LCOE Constrains
+A key constraint that policy makers will face, when attempting to address the de-carbonisation of electrical energy, is doing so without substantially increasing the cost of heat for the consumer. This naturally places a fundamental limit on the generation over capacity that may be installed since this will lead to higher LCOE due to lower CF. Further more, it is doubtful that energy storage based schemes
+
+** Summary
+This degree of seasonal demand is something that has never been required of the electrical network before, and as discussed in Section ref:secSeasonalityVsLSCO, will necessarily lead to a rise in LCOE. It is the author's opinion, that the de-carbonisation of heating poses one of, if not the most substantial barrier to the UK's net zero plans.
 
 * Constraints
 To bound the problem we may set constraints on aspects of this proposed future grid to help narrow down the problem.
@@ -198,11 +259,6 @@ It is therefore expected that for the lower cost generation sources such as sola
 
 * Future Zero carbon Energy Mix
 Forecasting the future energy mix is the subject of extensive debate and is sensitive to a huge variety of unpredictable factors and unknowns such as government policy, geopolitical developments, to disruptive technologies. This analysis however starts with the assumption that the UK grid is indeed to be truly decarbonized and attempts to reason how this might look with current technologies. In this section will investigate which combination of technologies would likely provide the bulk of energy. The technologies considered here will simply be based on the current dominant sources of renewable and zero carbon energy on the UK grid shown in Figure ref:figPie2020CumGen as the only other dominant zero carbon energy source.
-
-#+Name: figPie2020CumGen
-#+caption: Breakdown of UK zero carbon energy production (Wave/tidal Excluded due to low scale) in GWh for the year 2020-2021 based on UK government data [[cite:&RenewableElecricityCap]]
-#+RESULTS: figPie2020CumGen
-[[file:./.ob-jupyter/9d5f54f66e0860cfcadd03202a7835f8eee375c2.png]]
 
 ** Solar
 ** Offshore Wind
@@ -301,6 +357,7 @@ It is clear that a grid so heavily dependant on intermittent generation such as 
 #+NAME: imports
 #+BEGIN_SRC jupyter-python :session test
 import numpy as np
+import random
 import matplotlib.pyplot as plt
 import pandas as pd
 from textwrap import wrap
@@ -508,7 +565,7 @@ ax = df_CF.plot.bar()
 out = ax.set_ylabel("Cappacity Factor (%)")
 #+End_src
 
-** Zero carbon Energy Mix
+** Current Zero Carbon Energy Mix
 #+ATTR_LATEX: :placement [H] :booktabs t
 #+caption:  Breakdown of UK Zero carbon energy production in GWh for the year 2020-2021 based on UK government data [[cite:&RenewableElecricityCap]]
 #+NAME: tabUkGreenEnergy2020
@@ -529,6 +586,65 @@ ax1.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
 ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 plt.show()
 #+End_src
+
+** Current Energy Mix <<secAppCurrentEnergyMix>>
+*** By Source
+#+ATTR_LATEX: :placement [H] :booktabs t
+#+caption: UK Energy Mix by Source 2019-2020 in TWh, Data sourced From UK Government Data[[cite:&ukEnergyConsumptionAll]]
+#+NAME: tabUKEnergyMix2019to20_byFuel
+| Generation Technology  |   2019 |   2020 |
+|------------------------+--------+--------|
+| Oil                    |   1.07 |   0.83 |
+| Gas                    | 131.93 | 111.43 |
+| Coal                   |   6.95 |   5.50 |
+| Nuclear                |  56.18 |  50.28 |
+| Onshore wind           |  31.82 |  34.69 |
+| Pumped storage         |   1.76 |   1.40 |
+| Offshore wind          |  31.98 |  40.68 |
+| Hydro (natural flow)   |   5.85 |   6.75 |
+| Solar                  |  12.58 |  13.16 |
+| Other fuels            |   6.36 |   7.94 |
+| Bioenergy              |  37.31 |  39.31 |
+| Shoreline wave / tidal |   0.01 |   0.01 |
+|------------------------+--------+--------|
+| Total                  | 323.80 | 312.00 |
+
+*** By carbon emissions
+#+ATTR_LATEX: :placement [H] :booktabs t
+#+caption: UK Energy Mix by Source 2019-2020 in TWh, Data sourced From UK Government Data[[cite:&ukEnergyConsumptionAll]]
+#+NAME: tabUKEnergyMix2019to20_byCarbonEmmissions_App
+| Generation Technology |   2019 |   2020 |
+|-----------------------+--------+--------|
+| Renewables            | 119.54 | 134.60 |
+| Low carbon            | 175.73 | 184.88 |
+| Fossil fuels          | 139.96 | 117.77 |
+|-----------------------+--------+--------|
+| Total                 | 323.80 | 312.00 |
+
+*** Process Data
+#+NAME: pltPie2020EnergyMix_All
+#+BEGIN_SRC jupyter-python :session test :var data_EnergyMix=tabUKEnergyMix2019to20_byFuel :exports both
+data_EnergyMix = np.array(data_EnergyMix)
+# display(data_EnergyMix)
+labels = data_EnergyMix[1:-2,0]
+labels = ['\n'.join(wrap(x,20)) for x in labels]
+# display(labels)
+sizes = data_EnergyMix[1:-2,2]
+nSlices = len(sizes)
+colorMap= plt.get_cmap('gnuplot')
+colors = [colorMap((i+0.3)/(nSlices+0.3)) for i in range(nSlices)]
+random.shuffle(colors)
+
+# display(colors)
+sizes = [float(x) for x in sizes]
+# display(sizes)
+fig1, ax1 = plt.subplots()
+ax1.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90, colors=colors)
+ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+plt.show()
+#+End_src
+
+
 ** Current Natural gas demand <<secAppNatGasDemand>>
 This data is sourced from the UK governments  Digest of United Kingdom Energy Statistics 4.2 (DUKES)[[cite:&NaturalGas]].
 
@@ -583,7 +699,7 @@ ax1.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
 ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 plt.show()
 #+End_src
-** US Forestry Production
+** US Forestry Production :noexpor:
 #+NAME: pltUsForrestry
 #+BEGIN_SRC jupyter-python :session test
 df=pd.read_csv('UnitedStatesForestry.csv')
