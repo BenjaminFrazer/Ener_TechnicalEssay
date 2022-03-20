@@ -223,17 +223,9 @@ A key characteristic of heating demand however is it's inherent seasonality (sho
 #+NAME: figHeatingSeasonality
 [[file:Figures/SeasonalEnergyVariation.jpg]]
 
-
 ** LCOE Constrains
 A key constraint that policy makers will face, when attempting to address the de-carbonisation of electrical energy, is doing so without substantially increasing the cost of heat for the consumer. This naturally places a fundamental limit on the generation over capacity that may be installed since this will lead to higher LCOE due to lower CF. Further more, it is doubtful that energy storage based schemes
 
-** Summary
-This degree of seasonal demand is something that has never been required of the electrical network before, and as discussed in Section ref:secSeasonalityVsLSCO, will necessarily lead to a rise in LCOE. It is the author's opinion, that the de-carbonisation of heating poses one of, if not the most substantial barrier to the UK's net zero plans.
-
-* Constraints
-To bound the problem we may set constraints on aspects of this proposed future grid to help narrow down the problem.
-
-** Cost of electricity
 *** Breakdown of an energy Bill
 A vital constrain when considering future energy mix is that the cost of electricity to the end user remain low enough so that consumers will have manageable heating bills. This means that on a $/kWh[fn::$/kWh is used for compatibility with the academic literature] heat energy must cost less than or in the region of the existing cost of gas. From this and the typical COP of a consumer grade heat pump, an upper limit on the acceptable cost per kWh may be established. This can then be roughly translated in an upper limit on the total LCOE of the generation sources on the network. From Figure ref:figPieBillBreakdown, we can see that the wholesale price of electricity, accounts for only \approx30% of the final bill.
 
@@ -242,22 +234,10 @@ A vital constrain when considering future energy mix is that the cost of electri
 #+RESULTS: pltPieBillBreakdown
 [[file:./.ob-jupyter/78297f61231fd227439826e32eae830f0efb85e3.png]]
 
-** Consistency, Overcapacity and Energy Storage Trade-off
-When faced with a highly variable energy supply one obvious degree of freedom is to oversize the system capacity. Though the minimum and maximum available generation would likely still vary with the same shape, the absolute value of the minimum would have increased meaning the absolute size of any generation shortfall, would be diminished. This has the obvious downside of resulting in a direct increase in costs due to the increased number/capacity of assets which would be directly be passed onto the levelized cost of electricity and thus the cost to the consumer. Where /reliability/ is defined as the fraction of time that demand is less than the available energy, one would expect there would be diminishing returns on /reliability/ for increases in capacity simply due to the statistical nature of renewable availability.
+** Summary
+This degree of seasonal demand is something that has never been required of the electrical network before, and as discussed in Section ref:secSeasonalityVsLSCO, will necessarily lead to a rise in LCOE. It is the author's opinion, that the de-carbonisation of heating poses one of, if not the most substantial barrier to the UK's net zero plans.
 
-To fully derive the degree of capacity required to guarantee 100% energy fundamentally depends on the statistical variation of the available energy of the renewable resources and the total energy storage capacity on the network. Producing an accurate figure for this is near to impossible would require complex statistical modelling along with substantial knowledge assumptions regarding the energy storage capacity of the network, thus the calculation conducted here should merely be seen as proving a ballpark figure.
-
-Through a comprehensive study of observed wind speed data from 66 sites across the UK and statistical analysis, Sinden [[cite:&2007]] showed that that the seasonal average wind power availability varies by only approximately \pm 10% of the yearly average. It was also shown that the total period of time per year where the entirety of the year where 90% of the UK experiences low wind is less than one hour.
-
-For this analysis, Wind and solar data from the UK website gridwatch [[cite:&gridwatch]] for the year 2020-2021. By assuming that the entirety of the UK's wind resource is not curtailed due to [fn::this may seem like a substantial assumption, but ]
-
-
-meaning  it would likely be require oversize Since a fundamental requirement of any stable grid be that reliability always be 100% (i.e. available generation > demand)
-
-It is therefore expected that for the lower cost generation sources such as solar and offshore wind, there will be substantial over capacity while the nuclear fission plants operate continuously at near full capacity.
-
-
-* Future Zero carbon Energy Mix
+* Predicted Future Zero carbon Energy Mix
 Forecasting the future energy mix is the subject of extensive debate and is sensitive to a huge variety of unpredictable factors and unknowns such as government policy, geopolitical developments, to disruptive technologies. This analysis however starts with the assumption that the UK grid is indeed to be truly decarbonized and attempts to reason how this might look with current technologies. In this section will investigate which combination of technologies would likely provide the bulk of energy. The technologies considered here will simply be based on the current dominant sources of renewable and zero carbon energy on the UK grid shown in Figure ref:figPie2020CumGen as the only other dominant zero carbon energy source.
 
 ** Solar
