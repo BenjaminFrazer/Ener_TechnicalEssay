@@ -1,4 +1,4 @@
-% Created 2022-03-21 Mon 10:49
+% Created 2022-04-15 Fri 13:21
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -17,10 +17,17 @@
 \usepackage{tikz}
 \usepackage{minted}
 \usepackage[margin=2cm]{geometry}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{{\textcolor{gray}\leftmark}}
+\fancyhead[R]{{\textcolor{gray}\thepage}}
+\renewcommand{\headrulewidth}{0pt}
 \usepackage{url}
 \usepackage{rotfloat}
 \usepackage{tikz}
 \usepackage{float}
+\hypersetup{hidelinks}
 \usepackage{gensymb}
 \usepackage{amsmath}
 \numberwithin{equation}{section}
@@ -74,15 +81,15 @@ linecolor= darkgray,
 %#frametitlerulewidth=2pt
 }
 \section{Introduction}
-\label{sec:orgc8b7f0b}
+\label{sec:org6c83099}
 The UK government has committed to the target of becoming net zero by 2050. This commitment is just one of the many similar such commitments to net zero made by governments all around the world. In this essay I will explore how a truly zero carbon grid could be realised with only well established zero carbon technologies, and from this perspective highlight the fundamental trade-off and constrains which must be reconciled as a part of this transition. From this analysis a prediction will be made on the likely future prominent zero carbon technologies and what implication this mix will have on the grid.
 \section{Current UK Energy Mix \label{secCurrentUkEnergyMix}}
-\label{sec:orgbacd2ed}
+\label{sec:org0e70717}
 In 2020 UK annual electricity consumption was \(\approx\) \texttt{312TW}. Of this, roughly \(\approx\) \texttt{59.6\%} was generated from inherently carbon neutral sources (Nuclear/Renewables). Annual UK demand is broken down by generation technology in Figure \ref{figPie2020CumGen}, while carbon neutral energy generation is shown by relative energy generation in Figure \ref{figPie2020CumGen_all}.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{./.ob-jupyter/a8d619243484ad885b707a27c333bdd574c2624c.png}
+\includegraphics[width=0.8\textwidth]{./.ob-jupyter/442ca792c1e2256ccaf7ae3c93c0ece27e7708b3.png}
 \caption{\label{figPie2020CumGen_all}Breakdown of UK energy Demand (Wave/tidal Excluded due to low scale) in GWh for the year 2020-2021 based on UK government data \cite{RenewableElecricityCap}}
 \end{figure}
 
@@ -93,7 +100,7 @@ In 2020 UK annual electricity consumption was \(\approx\) \texttt{312TW}. Of thi
 \end{figure}
 
 \section{Capacity Factor (CF) \label{secCF}}
-\label{sec:org8f183da}
+\label{sec:org9329733}
 Capacity factor \footnote{Also known as load factor} is defined as the total energy generated over a period of time divided by the theoretical maximum as specified by it's nameplate rating.
 
 \begin{align}
@@ -119,11 +126,11 @@ Nuclear energy on the other hand has a relatively high capacity factor of \(\app
 \caption{\label{figCFBreakdown}Breakdown of capacity Factor by Generation Type for 2019, Data Sourced from UK government \cite{NonRE_CF,RenewableElecricityCap}, Tabular data in Appendix Section \ref{secAppCFBreakdown}.}
 \end{figure}
 \section{Grid Stability Limitations of Converter based Generation \label{secInertiaLimmitsOfGeneration}}
-\label{sec:orgdd72e26}
+\label{sec:org67264ae}
 This section will attempt to give a brief overview of the limitations of converter based generation due to grid stability.
 
 \subsection{Definition of Grid following}
-\label{sec:orgc9e0dae}
+\label{sec:org79e1658}
 Developments in silicon power electronics, have enabled generators to interface with the grid without physically rotating machines. In a traditional synchronous machine, the back EMF is a product of the physically rotating magnetic field of the rotor, converters control their voltage by varying the duty cycle of power electronic switches at high frequency to create an average sinusoidal voltage. This has the advantage that the inverter voltage source, and as such the power flow, may be controlled with extremely high fidelity and bandwidth invariant to grid conditions.
 
 This high bandwidth control gives the controls engineer the ability to completely reject almost any grid disturbance, and continue to operate only within the safe current of the device. For example, if a disturbance occurs such as a sharp fall in frequency, the converter will simply follow this frequency while exporting the exact same current. This is in contrast to a synchronous machine which will deliver inertial energy in proportion to the rate of change of frequency experienced according to the swing equation. The reasoning for designing this grid following characteristic is simple: Over rating components is expensive so instead the converter's operational envelope is limited.
@@ -131,25 +138,25 @@ This high bandwidth control gives the controls engineer the ability to completel
 Such grid follow converters to date make up the bulk off the installed capacity of renewable energy systems such as solar and wind farms.
 
 \subsection{High Penetration of Grid Following Inverters}
-\label{sec:org7782850}
+\label{sec:org60424eb}
 Penetration in the context of electrical networks is simply defined as the fraction of electricity generated by a given source of interest. As the network decarbonises, it is expected that the share of renewable energy sources has scaled up. Since much of this generation will be converter based, the UK grid is increasingly faced with situations in which the bulk of the connected generation are converter based. Since these devices can be thought of as non inertial, this has the effects of lowering the total system inertia.
 
 \subsection{Synthetic Inertia With Renewables}
-\label{sec:orgdd44c93}
+\label{sec:orgb89b220}
 \subsubsection{Overview}
-\label{sec:org4129b2c}
+\label{sec:orgc9c6f02}
 A technology under development that is targeted at addressing this is converter based inertia, referred to as 'synthetic Inertia' \footnote{Also referred to as Grid Forming and Virtual Synchronous Machine (VSM)}.
 
 This algorithm aims to replicate the voltage source like behaviour of synchronous machines using a low bandwidth control of power, while the angle of the voltage sources is largely allowed to rotate according to the governing differential equations of a synchronous machine's rotor. Theoretically these converters will respond to frequency disturbances in much the same way as traditional synchronous machines within the operational envelope of the device.
 
 \subsubsection{Benefits of synthetic Inertia}
-\label{sec:org151ac69}
+\label{sec:org24671b9}
 Since large scale penetration of grid following inverter based systems undermines network stability, it is increasingly likely that renewable generation will face increasing curtailment and/or national grid will be forced to compensate by increasing the deployment of mitigating techniques which will drive up the cost of electricity \footnote{Such mitigations have in the past included the installation of synchronous condensers or connecting non generating synchronous machines just for their stabilising effect}. In this sense, synthetic Inertia can be seen as both an enabler for higher renawable energy penetrations, and a means of lowering energy costs.
 
 \section{Levelized Cost of Electricity (LCOE)}
-\label{sec:orga945d80}
+\label{sec:orgecc1c46}
 \subsubsection{What is LCOE}
-\label{sec:org84baed2}
+\label{sec:orgdb15d9d}
 Since we have established
 Levelized cost of electricity (LCOE) is defined simply as the total cost of building, running and decommissioning an energy generation asset divided by it's lifetime generation cost.
 \begin{align}
@@ -159,7 +166,7 @@ LCOE = \frac{\text{Lifetime Cost (\$)}}{\text{Lifetime Production (KWh)}} = \fra
 
 This is a vital metric for comparing the cost effectiveness and profitability of a given generation source. By accounting for profit margins and transmission/distribution use of system fees, this metric may also give a very rough insight into the likely end cost of energy to the consumer assuming a relatively competitive energy market.
 \subsubsection{LCOE Breakdown by generation Type \label{LCOEBreakdown}}
-\label{sec:org2e40b6c}
+\label{sec:orga005442}
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{./.ob-jupyter/8db2ae3ea8d23f67cdfb46f0d78029d25fe124bc.png}
@@ -167,7 +174,7 @@ This is a vital metric for comparing the cost effectiveness and profitability of
 \end{figure}
 
 \subsubsection{LCOE vs Capacity factor \label{secLCOEvsCF}}
-\label{sec:orgdf9a7b9}
+\label{sec:org647649d}
 Choosing the optimal mix of energy generation is not simply a case of electing the lowest LCOE since the LCOE itself will be a function of the capacity factor and this capacity factor will be affected by the type of grid. This can be shown by assuming that the operational period (\(t_{hours}\)) and the levelized fuel cost is relatively fixed\footnote{It should be noted here that this is a very high-level analysis with many implicit assumptions, among them the assumption of fixed lifetime for a given generation type : This means that OEM costs which are roughly speaking a function of lifetime and capacity factor can be considered fixed costs.}, we can then rearrange Equation \ref{eqLCOE} into \ref{eqLCOE_5_final} (see Appendix \ref{secAppDerivationOfLCOEBreakdown} for full derivation).
 
 \begin{align}
@@ -178,13 +185,13 @@ LCOE &= \frac{C_{Fixed}}{S_{Base\; kW} \times t_{hours}\times CF}+ C_{Fuel(\poun
 
 Examining \ref{eqLCOE_5_final} see that generators trying to minimise LCOE roughly have only one degree of freedom \footnote{This ignores of course all of the other ancillary service which may be supplied on top of just energy.}, that being capacity factor. Indeed we see in generation like Nuclear energy where fixed costs are high and fuel +carbon costs are low, capacity factors are often very close to 1 and even then the LCOE is relatively high relative to other generation types (see \ref{LCOEBreakdown}). Wind and solar energy on the other hand have no fuel or carbon costs and relatively low LCOE, even with substantially lower capacity factors than other generation. This is because the cost per installed kW capacity (C\textsubscript{Fixed}) for wind and solar is so low that is compensates for this low CF.
 \subsubsection{Seasonality Vs LCOE \label{secSeasonalityVsLSCO}}
-\label{sec:org6720130}
+\label{sec:org5f1504b}
 The effect of seasonal variation on LCOE, can be derived by inspection of Equation \ref{eqLCOE_5_final}. To meet demand one must size capacity according to the peak demand effectively setting \(C_{Fixed}\) and \(S_{Base}\). One may assume these are linear with another so this has no impact on the LCOE. When the minimum in demand is substantially lower than the peak however, it necessarily lowers the system wide capacity factor and thus also increases the LCOE.
 
 It should be noted here that where fuel is a dominant factor in the LCOE, there is less sensitivity to this lower capacity factor on the other hand, renewable generation is effectively inverse linearly dependant on CF.
 
 \section{Future Space Heating Demand \label{secHeating}}
-\label{sec:org96a8374}
+\label{sec:orgbbae687}
 A critical challenges in the transition to net zero is decarbonising residential space heating. As of Tue, 15/03/22 the future of heating in the UK is still very unclear. Until recently the UK has relied on the abundant gas reserves of the north sea for the vast majority of it's heating needs. These reserves however are dwindling, and beyond being in carbon intensive, depending in imported natural gas is expected to incur increasing cost, not to mention poses a geopolitical vulnerability. It is thus no surprise that decarbonising heating has received substantial attention from the government.
 
 The current policy of the UK government seems to be leaning in the direction of full electrification of heating using heat pumps in combination with altered building standards for improved insulation. This approach has been met with some scepticism on the grounds of high unit cost of heat-pumps and relatively limited uptake. It is the authors opinion however that these limitations may be mitigated though shared ownership of units or some form of district heating schemes.
@@ -199,7 +206,7 @@ As such currently only two plausible scenarios exist for UK heating energy\footn
 
 When considered from the point of view of the electrical energy network, these two options are both fundamentally consumers of energy, however the quantity and distribution of the load vary substantially in each case.
 \subsection{Current Natural gas demand \label{secCurrentNatGasDemand}}
-\label{sec:orga2cbfc3}
+\label{sec:orga0ce602}
 Natural gas demand will be used as a proxy for the UK's current heating demand. In 2019 the UK's total natural gas demand was \(\approx\)863 TWh, of this, \(\approx\)377 TWh was in the domestic, commercial and public sector \cite{NaturalGas}. This report will assume that the majority of this energy is used for space heating, meaning that this figure is a good proxy for the UK's total space heating energy demand that must be decarbonized through electrical means.
 
 From Figure \ref{figNatualGassDemandBreakdown} It is noted that this sector, though the largest, still only amounts to \(\approx\)43\% of total natural gas demand. With the exception of electrical generation, it is still largely unclear how many industrial uses of natural gas, for example the refinement of raw materials,will be decarbonised. A possibility is that net carbon syncs could trade their carbon capture capacity, or that these industries pivot towards zero carbon hydrogen. Both scenarios are likely to have substantial impacts on the network as a whole, however it is outwith the scope of this report to speculate future developments here so the influence of the remaining \(\approx\)25\% (Losses, Other and Industry) will not be considered.
@@ -211,14 +218,14 @@ From Figure \ref{figNatualGassDemandBreakdown} It is noted that this sector, tho
 \end{figure}
 
 \subsection{Electrical Characteristics of Hydrogen Scenario}
-\label{sec:orga63f4e0}
+\label{sec:orgfb48712}
 This section will briefly examine the implications of de-carbonisation of space heating using a purely hydrogen base approach.
 
 \subsubsection{Hydrogen Energy Storage}
-\label{sec:org90f671b}
+\label{sec:orga1f84a0}
 The key advantage of hydrogen is of course the greater ease of storage\cite{HydrogenEnergyStorag2}. As such demand can be assumed to be dis-patchable to a certain degree, as long as the correct net energy is delivered. The option is also being discussed to attach
 \subsubsection{Hydrogen Heating Electrical Energy Requirements}
-\label{sec:org613104b}
+\label{sec:org36002e4}
 In the case of the large scale Hydrogen network, at least as much energy must be supplied electrically to the electrolyser producing the hydrogen fuel, as will be used by the consumer to heat. Since current alkaline fuel cell technology such as Cummin's HYDRLYZER can attain up to 70\% efficiency \cite{CuminsElectrolizer} and there will be other energy losses due to compression and leakage \footnote{Hydrogen tends to be substantially more leaky due to it's atomic size}, we may safely assume that the electrical energy required per unit thermal energy used will be at least \(\approx\) \texttt{1.5}.
 
 Base on the current Natural gas space heating consumption inferred in Section \ref{secCurrentNatGasDemand}, we can estimate the expected future demand assuming a full adoption of this technology \footnote{This analysis is of course greatly simplified and makes a great many simplifying assumptions for instance: It is assumed that (despite plans to the contrary by the UK government) the space heating energy demand of the nation will remain roughly constant, though changes in building legislation aim to improve this on a per capita basis. This legislation will only be adopted in 2025, and then only apply to new builds, further more projections of the UK population grow forecast a rise of roughly 6.9\% by 2030. It seems likely therefore that for the foreseeable future, this demand will not deviate enough to invalidate this analysis.}.
@@ -231,9 +238,9 @@ E_{Heating\;Electrical\;(kWh)} = 1.5\times E_{Heating\;Nat\;Gas (kWh)}
 This yields and expected additional annual electrical load of \(\approx\) \texttt{565 TWh}, roughly \texttt{181\%} of the current annual electrical demand of \(\approx\) \texttt{312 TWh}. Restated, this would require an almost tripling in the UK's electrical energy generation capacity.
 
 \subsection{Electrical Characteristics of Heat pump Scenario}
-\label{sec:orgb82b494}
+\label{sec:orgef00085}
 \subsubsection{Coefficient of performance}
-\label{sec:orgec950b2}
+\label{sec:org1600351}
 The coefficient of performance (COP) of a heat pump is defined as the ratio of useful heating to input energy.
 
 \begin{align}
@@ -247,11 +254,11 @@ Where \(Q_C\) is the heat moved from the cold reservoir \(Q_H\), is the total us
 Typical heat-pumps have COP in the range of 2-4 though the minimum to qualify for UK incentives is \texttt{2.9} this figure will be used as a base case in the subsequent analysis though it is expected that this figure will improve.
 
 \subsubsection{Heat-pump Electrical Energy Requirements}
-\label{sec:orgeb82fa7}
+\label{sec:org0ffe57b}
 Again using the figure for annual UK space heating demand derived in Section \ref{secCurrentNatGasDemand} (\texttt{565 TWh}) and Equation \ref{eqCOPDef}, we can estimate the additional electrical requirement as \(\approx\) \texttt{195 TWh}, roughly \texttt{62\%} of the current annual UK energy consumption. Note that this is not simply a case of adding an additional 62\% capacity, to the network due to the substantial seasonal variability in natural gas demand that will be discussed in Section \ref{secSpaceHeatingVariablity}.
 
 \subsection{Seasonality of Demand \label{secSpaceHeatingVariablity}}
-\label{sec:org1839b6d}
+\label{sec:org1c4517d}
 A key characteristic of heating demand however is it's inherent seasonality (shown in \ref{figHeatingSeasonality}) with peaks in demand often in excess of 5 times the minimum summer demand. This is a highly variable demand relative to the relatively stable variations in Electrical demand. Even with the factor of 2.9 reduction gained through the use of the heat pump, it is clear just by inspection of Figure \ref{figHeatingSeasonality}, that this seasonal spike in demand will require substantially more than just an increase in capacity of 62\%.
 
 \begin{figure}[H]
@@ -261,11 +268,11 @@ A key characteristic of heating demand however is it's inherent seasonality (sho
 \end{figure}
 
 \subsection{LCOE Constrains}
-\label{sec:orgeb46bfd}
+\label{sec:orgc91ccba}
 A key constraint that policy makers will face, when attempting to address the de-carbonisation of electrical energy, is doing so without substantially increasing the cost of heat for the consumer. This naturally places a fundamental limit on the generation over capacity that may be installed since this will lead to higher LCOE due to lower CF. Further more, it is doubtful that energy storage based schemes
 
 \subsubsection{Breakdown of an energy Bill}
-\label{sec:orge650ed2}
+\label{sec:orga73b214}
 A vital constrain when considering future energy mix is that the cost of electricity to the end user remain low enough so that consumers will have manageable heating bills. This means that on a \$/kWh\footnote{\$/kWh is used for compatibility with the academic literature} heat energy must cost less than or in the region of the existing cost of gas. From this and the typical COP of a consumer grade heat pump, an upper limit on the acceptable cost per kWh may be established. This can then be roughly translated in an upper limit on the total LCOE of the generation sources on the network. From Figure \ref{figPieBillBreakdown}, we can see that the wholesale price of electricity, accounts for only \(\approx\)30\% of the final bill.
 
 \begin{figure}[H]
@@ -275,21 +282,21 @@ A vital constrain when considering future energy mix is that the cost of electri
 \end{figure}
 
 \subsection{Summary}
-\label{sec:org2c31c4f}
+\label{sec:org576b664}
 This degree of seasonal demand is something that has never been required of the electrical network before, and as discussed in Section \ref{secSeasonalityVsLSCO}, will necessarily lead to a rise in LCOE. It is the author's opinion, that the de-carbonisation of heating poses one of, if not the most substantial barrier to the UK's net zero plans.
 
 \section{Predicted Future Zero carbon Energy Mix}
-\label{sec:org604b3c9}
+\label{sec:orgb6a7e0b}
 Forecasting the future energy mix is the subject of extensive debate and is sensitive to a huge variety of unpredictable factors and unknowns such as government policy, geopolitical developments, to disruptive technologies. This analysis attempts to reason how a zero carbon grid might look with current technologies. A simplifying assumption made here is to exclude all fossil fuels from consideration although they may be modified to lower emissions substantially using so called carbon capture technology. The reasoning for this is simply that fossil fuels are fundamentally a finite and dwindling resource and as such humanity will need to learn to live without it sooner or later.
 
 This section will investigate which combination of technologies would likely provide the bulk of energy in this future zero carbon grid. The technologies considered will be limited to the current widely adopted sources of renewable and zero carbon energy on the UK grid (shown in Figure \ref{figPie2020CumGen}) and use established performance figures rather than speculative future developments.
 
 \subsection{Solar \label{secSolar}}
-\label{sec:orge0ebf40}
+\label{sec:orgff970f7}
 Off all dominant generation technologies, solar PV currently has the lowest LCOE, at roughly \texttt{45 £/kWh} according to \cite{DeptEnerLCOE}. Installation costs of solar PV having fallen by approximately 82\% between 2010 and 2020, and are expected to fall further still, meaning that solar PV will certainly remain a contester in the future energy mix.
 
 \subsubsection{Limitations and Advantages}
-\label{sec:orgbb3a66c}
+\label{sec:org9601c2b}
 A key constraint of solar PV is of course the inherent intermittency of supply due to weather and season. The UK, due to it's latitude, has substantial seasonal variability in it's day length and thus it's solar productivity. Further more, the UK's climate is such that (as discuss in Section \ref{secCurrentNatGasDemand}) the future energy network will expect the bulk of it's demand in the winter months when the generation from solar is at it's minimum.
 
 Solar PV is inherently converter based generation and as such acts to reduce network stability as discussed in Section \ref{secInertiaLimmitsOfGeneration}. It is also likely, given the inherent lack of stored energy present in solar systems\footnote{unlike wind generation with stored energy in the blades.}, that solar converters would be a particularly good candidate for a \emph{synthetic inertia} algorithm. This means that solar PV will be likely to face substantial curtailment should capacity grow substantially.
@@ -297,29 +304,29 @@ Solar PV is inherently converter based generation and as such acts to reduce net
 The solar generation is also much more highly statistically across the country than say wind generation. For example a sunny day in Glasgow is more likely to predict a sunny day in London, than a windy day in London is to predict a windy day in Edinburgh. This is exacerbated further of course by the rigid seasonal and daily profile of solar PV. Since the quantity of incident solar Irradiance is so heavily influenced by cloud cover, this leads to huge and rapidly changing variability in generation. All of this conspires to a situation where the periods of peak generation is actually where the energy is least needed. While this instantaneous limitation of solar PV may be circumvented with energy storage, the network would still need to be sized to meet the greatest winter energy demand with little to no contribution from solar PV. If such were the case then this same generation should also be able to meet demand at the height of summer when demand is lower making solar PV obsolete.
 
 \subsubsection{Summary}
-\label{sec:org16afc7e}
+\label{sec:org338aee9}
 In summary, it is the author's view that solar PV makes sense in the UK only as a short term transitional technology, where solar energy may be used to transiently displace fossil fuels. It should be noted that this only works where rapidly dis-patchable generation such as natural gas exists on the network which can soak up the transient peaks and troughs.  Short of the cost of solar PV falling to the point that it becomes economical to operate solely on a winter capacity factor it seems unlikely that solar PV can scale to be the dominant generation source for a fully decarbonised grid \footnote{It is noted here that this dynamic may be drastically different in lower latitude countries where the dominant loads are air conditioning, and thus peak during the summer, and seasonal variability in generation is lower.}.
 
 \subsection{Offshore Wind \label{secOffshoreWind}}
-\label{sec:org2fa3cd3}
+\label{sec:orgf6975b5}
 Similar to solar PV, offshore wind is intermittent converter based generation. Estimates vary, but over the last decade the levelized cost of electricity from offshore wind has also decreased between 10-30\% and is projected to continue to do so.
 
 \subsubsection{Limitations and advantage}
-\label{sec:orgde896b2}
+\label{sec:org901241b}
 Due to the converter based nature of offshore wind farms, similar constraints apply to those discussed in Section \ref{secSolar}. However unlike solar the consistency of generation from offshore wind is much greater than that of solar, as can be seen by the fact that capacity factor for offshore wind is nearly four times higher than shown in Figure \ref{figCFBreakdown}. This makes intuitive sense, since wind is not nearly as affected by season or time of day as sunlight. Further more it can be shown that the level of correlation between wind-speed at individual sites diminishes rapidly, meaning that it is less likely that large numbers of wind farms are concurrently experiencing low wind at the same time.
 
 Since the inverters used in the wind industry are typically on the order of MW and the spinning blades act as a source of energy storage, wind energy will likely be much more suitable for \emph{synthetic inertia} (see Section \ref{secInertiaLimmitsOfGeneration}).
 
 \subsubsection{Summary}
-\label{sec:org35dc868}
+\label{sec:org24afc3b}
 All of this means that though the existing LCOE of offshore wind is substantially higher than that of solar PV, when the and costs problems associated with scaling competing generation technologies are accounted for, offshore wind compares very favourably.
 
 \subsection{Nuclear}
-\label{sec:org0d3758d}
+\label{sec:org8430523}
 Of the carbon neutral technologies present in the current UK energy mix, Nuclear energy has one of the highest LCOE at roughly \texttt{95 £/kWh} (see Section \ref{LCOEBreakdown}). Nuclear energy benefits from very low fuel costs (see Figure \ref{figLCOEbreakdown}) with the dominant costs coming from construction. From Figure \ref{figCFBreakdown} (Section \ref{secCF}) we see that Nuclear energy's capacity factor (\(\approx\) \texttt{60-70\%}) is already amongst the highest of all generation types.
 
 \subsubsection{Limitations}
-\label{sec:org706fdc8}
+\label{sec:org7013eeb}
 As with many of the prior technologies discussed, the limitations to scaling up nuclear energy primarily relate to the LCOE and as such the end cost to the consumer.  Given the already high LCOE, the low fuel costs and high construction costs, it is clear that minimising maintaining high capacity factors is vital to avoid large consumer electricity bills.
 
 This poses problems when considering an energy network primarily supplied by nuclear energy, since the expected seasonal variability in demand incurred by the electrification of heating will doubtless eat substantially into the capacity factor causing a substantial increase in consumer energy bills.
@@ -327,15 +334,15 @@ This poses problems when considering an energy network primarily supplied by nuc
 Further more nuclear power ramps up and down generation with a relatively long time constant. This means that frequency regulation has and will need to continue to be the domain of either faster acting generation, or energy storage of some description.
 
 \subsubsection{Advantages}
-\label{sec:org911e931}
+\label{sec:org1b8693f}
 Nuclear energy's key advantage is it's consistent and predictable generation profile. Further more, nuclear energy along with hydro are amongst the only generation technologies that utilise synchronous machines and as such provide electrical inertia to the grid.
 
 \subsubsection{Summary}
-\label{sec:orga3ac6b6}
+\label{sec:org9481912}
 With it's consistent availability of supply and the inertia provided to the grid, it seems that Nuclear energy capacity will likely continue to grow. Due to the expected increased seasonality of demand, and the effect this will have on LCOE, it seems unlikely, short of a massive drop in the costs associated with nuclear energy, that it will become the single dominant generation technology.
 
 \subsection{Biomass \label{secBioGas}}
-\label{sec:org4a919ee}
+\label{sec:org2a34224}
 This section will be concerned with exploring the scalability and potential role that biomass may play in the future energy mix. For clarity, ``biomass'' in this essay will refer to a subset of generation types which produce energy from once living organisms \footnote{Note recently living i.e. not fossils} either by direct combustion or by generating gas through anerobic digestion.
 
 A breakdown of the various technologies that constitute biomass energy is shown in Figure \ref{figPie2020BiomassBreakdown}. The reader should note that the totality of this chart represents only roughly \texttt{12.6\%} of the total UK electrical energy production that energy in the year 2020 \cite{BiomassPolicyStatement}. Many of these technologies vary substantially in their scalability however only the dominant form (plant biomass) will be considered here in this report.
@@ -347,7 +354,7 @@ A breakdown of the various technologies that constitute biomass energy is shown 
 \end{figure}
 
 \subsubsection{Plant Biomass Combustion}
-\label{sec:org8130950}
+\label{sec:orga208cca}
 Plant biomass combustion is by far the dominant form of Biomass generation in the UK accounting for \(\approx\)68.3\% of total Biomass energy in the year 2020. The vast majority of this is in the form of wood bi-products and pellets imported from the united states and Canada \cite{BiomassPolicyStatement}.
 
 Drax power plant is the largest biomass power plant in the UK, accounting for the vast majority of the UK's bio-energy production. The power station has six 660MW units, four of which were converted to purely biomass in 2016 yielding a total biomass capacity of 2.6GW. With the UK government's policy to phase out coal power by 2024 various plans were made to convert the remaining two units to gas and install carbon capture technology, however due to limited interest from the government, both plans have failed \cite{EndtoCoal2024}.
@@ -355,7 +362,7 @@ Drax power plant is the largest biomass power plant in the UK, accounting for th
 In theory, using such bio-fuels is net carbon neutral since the trees are harvested from managed woodlands which will regrow and recapture the emitted carbon, however there have been serious concerns raised about the transparency and traceability of the suppliers of these wooden pellets.
 
 \subsubsection{Scalability}
-\label{sec:org0f95d2b}
+\label{sec:org6fa0ccc}
 Currently the UK based biomass schemes are heavily reliant on foreign imported feedstock in the form of wood pellets. Indeed, Drax is the larges single buyer of such wooden pellets in the world. Not only does the shipping of these pellets incur carbon emissions, it also hints at another inherent limit of this technology, that being land surface area. With the large majority of the UK being farmland, only around 13\% remains as forest, amounting to around 3.23 million hectares. The UK is already heavily dependant on foreign timber for the building sector, and wooden pellets imports have currently eclipsed these as the dominant import at 9.1million Tons \cite{ForestResearch}.
 
 With the current generation demand for feedstock well outpacing domestic production with even this limited scale of operations currently providing only \(\approx\)8.6\% of the current UK electricity demand, it is difficult to see how this technology will continue to scale. The UK is currently the leader in Biomass energy, however this technology is currently seeing rapid growth throughout Asia, America and the rest of Europe. Currently the production of these pellets is primarily limited to waste materials from wood mills meaning that the pellets are relatively low cost compared to timber. However as demand rapidly grows it seems highly likely that, producers will be increasingly forced to harvest timber purely to meet pellet demand driving up prices. Indeed there are already allegations that some of the largest producers of pellet feedstock are using whole trees, rather than the claimed waste material \cite{BioPelletsWholeTrees}.
@@ -363,16 +370,16 @@ With the current generation demand for feedstock well outpacing domestic product
 Even though the UK is an outlier in it's overall population density it still seems unlikely that global forestry stocks could be a viable replacement for global fossil fuel consumption. Currently wooden pellets production in the United States only amount to around 8.6 million tons, only around \(\approx\)5\% of it's total timber production\cite{USTimberPoduction,UNForresteryDB}. In some sense the early adopters of this technology are in somewhat of a catch 22, whereby if this technology does prove to be scalable and cost effective then there will certainly be much greater competition for feedstock acting to drive up the price.
 
 \subsubsection{LCOE}
-\label{sec:org80fc3ee}
+\label{sec:org04475f6}
 According to figures from the figures from the Department of Business, Energy \& Industrial Strategy, the LCOE of dedicated biomass is estimated at 98 £/KWh making it roughly \(\approx\)170\% more expensive than offshore wind \cite{DeptEnerLCOE}.
 
 It does however provide the interesting possibility of acting as a form of long term energy storage which may be dispatched to compensate from variable renewable sources. Another inherent benefit of this technology is that given it utilises large scale steam turbines driving synchronous generators is that it inherently also provides inertia to the grid, acting to improve the stability of the network as a whole.
 
 \subsubsection{Summary}
-\label{sec:org6363a7f}
+\label{sec:orgd740c94}
 In summary, it is the authors view that while plant biomass may provide very limited carbon sequestration and energy storage, it seems unlikely that this technology could scale to replace the energy currently provided by fossil fuels. The numeric analysis of the prior section substantiates a long-held intuition of the author on biomass energy. That being: By combusting fossil fuels, industrial nations for the past \(\approx\)150 years have, in a relative eye-blink, consumed the stored residual energy of the biosphere which has been gradually accumulated over a period between \(\approx\)20-400 Million years. To think that this rate of energy consumption could be sated, even in part, by a fraction of it's instantaneous output , in the form of plant biomass, is unrealistic.
 \subsection{Prediction}
-\label{sec:orgef8415d}
+\label{sec:org070c410}
 Synthesising the conclusions of the above sections into any single forecast is subject to vast uncertainty to the assumptions inherent in this analysis and the unpredictable swings of technology, however it is the authors view that making measurable predictions is a necessary exercise in the process of evaluating one's models and assumptions.
 
 The first broad conclusion drawn form this analysis is that dis-patchable energy is substantially more valuable than intermittent energy. The ability of the network to behave as a slack bus to intermittent generations, paid with fixed tariffs comparable to those of fossil fuels, is a capability afforded by the inherent flexibility of fossil fuel based generation. This cannot remain the case without a vast and costly  investment in grid scale energy storage, and even then this will not suffice to smooth out seasonal variability. This must lead us to conclude that the market incentives for dis-patchable generation must continue to rise with standby capacity perhaps being a the entire business model of certain generation. Biomass seems to be the only technology well suited for this role since nuclear energy is expected to already be operating at capacity to minimise LCOE.
@@ -384,7 +391,7 @@ In terms of future energy mix, it seems likely that the bulk energy, will come f
 From this energy mix it seems likely that the total system inertia will fall substantially with the only spinning reserve provided by limited biomass, nuclear generation and synchronous condensers. This will present a problem for the control of frequency since lower inertia requires faster acting frequency regulation. Out of the technologies discussed here, most are unsuitable for this role, due to lack of energy storage and/or slow ramp up times. It therefore seems inevitable that frequency regulation increasingly becomes the domain of demand side response and grid scale battery storage. Indeed it may be made extremely expensive to connect certain industrial, or even consumer loads without including inbuilt regulation technology.
 
 \section{Conclusion}
-\label{sec:orgb48f413}
+\label{sec:org0548bcd}
 This report discussed the implications for true long term carbon neutrality on the UK electrical network from with established technology. As a part of this analysis, the key metrics and underlying trade-offs were highlighted and the potential impact of de-carbonisation of space heating was also discussed.
 
 It is the author's view that maintaining the current low cost and ready availability of electrical energy afforded by fossil fuels will be extremely challenging. Hydrocarbons are, simply put, an extremely potent source of energy. The discovery and exploitation of this highly energy dense, flexible and cheap fuel, was almost certainly what propelled our civilisation into the industrial revolution so to disengage our civilisation from this fuel, is bound to have a substantial impact. Consider that even now as we tentatively increase the capacity of renewable generation, it is the inherent flexibility and energy storage of fossil fuels that picks up the slack. It seems therefor that the greatest challenge is not in the transition to 90\% renewables, rather it lies in removing the final 10\%.
@@ -392,9 +399,9 @@ It is the author's view that maintaining the current low cost and ready availabi
 Short of some miraculous leap in technology we may be faced with the conclusion that the pas 100 years were simply a fleeting period of energy abundance and that the expectation of cheap energy delivered at all times of the day at is simply a thing of the past. It certainly seems likely that many of the advancements needed to achieve carbon neutrality must be on the demand side. The possibility of smarter loads, acting to smooth out peaks in the demand curve and perhaps acting to regulate frequency in a limited capacity, will certainly therefore be a rich area of advancement.
 
 \section{Appendices}
-\label{sec:orga4b94cd}
+\label{sec:org082af94}
 \subsection{Derivation of LCOE Breakdown \label{secAppDerivationOfLCOEBreakdown}}
-\label{sec:orgb3bc6de}
+\label{sec:org31bf6a9}
 \begin{align}
 \label{eqELifetime}
 E_{Life}(CF) &\propto CF\\
@@ -475,7 +482,7 @@ LCOE &= \frac{C_{Fixed}}{S_{Base\; kW} \times t_{hours}\times CF}+ C_{Fuel(\poun
 \end{align}
 
 \subsection{Breakdown of a consumer energy bill}
-\label{sec:org0354a3d}
+\label{sec:org8345ddc}
 
 \begin{table}[H]
 \caption{\label{tabBillBreakdown}Ofgem Estimated components of customer's energy bills from Ofgem \cite{ofgemBillBreakdown}}
@@ -491,9 +498,9 @@ LCOE &= \frac{C_{Fixed}}{S_{Base\; kW} \times t_{hours}\times CF}+ C_{Fuel(\poun
 \end{tabular}
 \end{table}
 \subsection{Breakdown of Levelized cost estimates}
-\label{sec:orgad553c5}
+\label{sec:org5edda79}
 \subsubsection{UK Gov data 2016}
-\label{sec:org293434c}
+\label{sec:org4e9e0cd}
 This Data is sourced from the UK Government Department of Business, Energy \& industrial Strategy's 2020 Electricity generation Cost 2016 Report Table 4 (pg 27) \cite{DeptEnerLCOE2016}.
 \begin{sidewaystable}[H]
 \caption{\label{tabLCOEBreakdownGov2016}Levelized cost Estimates for Projects commissioning in 2025, £/MWh (Data is sourced from UK Government Figures Published in 2016\cite{DeptEnerLCOE})}
@@ -516,17 +523,17 @@ Decommissioning and Waste & 2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
 Total & 95 & 136 & 110 & 148 & 82 & 189 & 100 & 63 & 61\\
 \bottomrule
 \end{tabular}
-\end{sidewaystable}\footnotetext[16]{\label{org88c4e78}This name has been changed to from 'CCS cost' for compatibility with Table \ref{tabLCOEBreakdownGov2020}.}
+\end{sidewaystable}\footnotetext[16]{\label{org9c7f9c6}This name has been changed to from 'CCS cost' for compatibility with Table \ref{tabLCOEBreakdownGov2020}.}
 \subsubsection{UK Gov Data 2020}
-\label{sec:org9e8502e}
-This Data is sourced from the UK Government Department of Business, Energy \& industrial Strategy's 2020 Electricity generation Cost 2020 Report Table 4.3 (pg 26) \cite{DeptEnerLCOE}\footnote{Biomass data is appended from Table 8 in Annex 1: Additional Estimates\cite{DeptEnerLCOE}.\label{orgaa0fe0a}}.
+\label{sec:org3298062}
+This Data is sourced from the UK Government Department of Business, Energy \& industrial Strategy's 2020 Electricity generation Cost 2020 Report Table 4.3 (pg 26) \cite{DeptEnerLCOE}\footnote{Biomass data is appended from Table 8 in Annex 1: Additional Estimates\cite{DeptEnerLCOE}.\label{org93e318c}}.
 \begin{sidewaystable}[H]
 \caption{\label{tabLCOEBreakdownGov2020}Levelized cost Estimates for Projects commissioning in 2025, £/MWh (Data is sourced from UK Government Figures Published in 2020\cite{DeptEnerLCOE})}
 \centering
 \begin{tabular}{lrrrrrr}
 \toprule
  & Offshore & Onshore Wind & CCGT H & CCGT+CCS Post & Large-Scale & Dedicated Biomass\\
- & Wind & Wind & Class & Combustion - FOAK & Solar & \textsuperscript{\ref{orgaa0fe0a}}\\
+ & Wind & Wind & Class & Combustion - FOAK & Solar & \textsuperscript{\ref{org93e318c}}\\
 \midrule
 Tag & Wind Off & Wind On & CCGT H & CCGT+CCS & Solar & Biomass\\
 Pre-Development Costs & 3 & 3 & 1 & 0 & 3 & 2\\
@@ -542,7 +549,7 @@ Total & 57 & 46 & 85 & 85 & 44 & 98\\
 \end{tabular}
 \end{sidewaystable}
 \subsubsection{Process Data}
-\label{sec:org8127e78}
+\label{sec:org812632e}
 \begin{minted}[breakautoindent=false,style=manni,breaklines=true,linenos=true]{python}
 df_LCOE_2020 = pd.DataFrame(data2020).iloc[3:, :]
 df_LCOE_2020.columns = data2020[2]
@@ -561,7 +568,7 @@ ax=ax.legend(loc=2)
 \end{minted}
 
 \subsection{Capacity factor \label{secAppCFBreakdown}}
-\label{sec:org8277ec7}
+\label{sec:org70b77f7}
 This Table is Sourced from UK Government data \cite{NonRE_CF,RenewableElecricityCap}.
 \begin{table}[H]
 \caption{\label{tabCFBreakdownGov2020}Load/Capacity Factor breakdown by generation technology from 2019 UK government data\cite{DeptEnerLCOE2016,NonRE_CF}}
@@ -585,7 +592,7 @@ Plant Biomass & 64.1 & \cite{RenewableElecricityCap}\\
 \end{table}
 
 \subsubsection{Process Data}
-\label{sec:org60c18de}
+\label{sec:org2751d5a}
 
 \begin{minted}[breakautoindent=false,style=manni,breaklines=true,linenos=true]{python}
 df_CF = pd.DataFrame(dataCF).iloc[1:,: ]
@@ -597,7 +604,7 @@ out = ax.set_ylabel("Cappacity Factor (%)")
 \end{minted}
 
 \subsection{Current Zero Carbon Energy Mix}
-\label{sec:org5191717}
+\label{sec:org082e13b}
 \begin{table}[H]
 \caption{\label{tabUkGreenEnergy2020}Breakdown of UK Zero carbon energy production in GWh for the year 2020-2021 based on UK government data \cite{RenewableElecricityCap}}
 \centering
@@ -612,9 +619,9 @@ Percent & 9.8 & 56.0 & 5.0 & 29.2 & 34.2 & 0.0 & \\
 \end{table}
 
 \subsection{Current Energy Mix \label{secAppCurrentEnergyMix}}
-\label{sec:orgd6cb3c1}
+\label{sec:org6cdb6cd}
 \subsubsection{By Source}
-\label{sec:org8d2a56f}
+\label{sec:org6b694da}
 \begin{table}[H]
 \caption{\label{tabUKEnergyMix2019to20_byFuel}UK Energy Mix by Source 2019-2020 in TWh, Data sourced From UK Government Data\cite{ukEnergyConsumptionAll}}
 \centering
@@ -641,7 +648,7 @@ Total & 323.80 & 312.00\\
 \end{table}
 
 \subsubsection{By carbon emissions}
-\label{sec:orgc98f6e2}
+\label{sec:org2b14614}
 \begin{table}[H]
 \caption{\label{tabUKEnergyMix2019to20_byCarbonEmmissions_App}UK Energy Mix by Source 2019-2020 in TWh, Data sourced From UK Government Data\cite{ukEnergyConsumptionAll}}
 \centering
@@ -659,7 +666,7 @@ Total & 323.80 & 312.00\\
 \end{table}
 
 \subsubsection{Process Data}
-\label{sec:orgaaa3695}
+\label{sec:org319e5da}
 \begin{minted}[breakautoindent=false,style=manni,breaklines=true,linenos=true]{python}
 data_EnergyMix = np.array(data_EnergyMix)
 # display(data_EnergyMix)
@@ -683,7 +690,7 @@ plt.show()
 
 
 \subsection{Current Natural gas demand \label{secAppNatGasDemand}}
-\label{sec:org95bb12b}
+\label{sec:org2b27260}
 This data is sourced from the UK governments  Digest of United Kingdom Energy Statistics 4.2 (DUKES)\cite{NaturalGas}.
 
 \begin{table}[H]
@@ -705,7 +712,7 @@ total & 863174 & 100.00\\
 \end{table}
 
 \subsubsection{Process Data}
-\label{sec:orgf941c14}
+\label{sec:org78350e1}
 \begin{minted}[breakautoindent=false,style=manni,breaklines=true,linenos=true]{python}
 data_NatGas = np.array(data_NatGas)
 # display(data_NatGas)
@@ -722,7 +729,7 @@ plt.show()
 \end{minted}
 
 \subsection{Biomass/Waste Energy Breakdown \label{secAppBiomassWasteEner}}
-\label{sec:orgbdc2c60}
+\label{sec:orge1c1ab7}
 \begin{table}[H]
 \caption{\label{tabBiomassBreakdown}Breakdown of Energy generated from Biomass/Waste (GWh) according to UK government data \cite{RenewableElecricityCap}}
 \centering
@@ -739,7 +746,7 @@ GWh & 3496 & 1067 & 4352 & 647 & 2904 & 26845 & 39311\\
 \end{table}
 
 \subsection{US Forestry Production}
-\label{sec:org1e2a3be}
+\label{sec:orgeccdc04}
 \begin{minted}[breakautoindent=false,style=manni,breaklines=true,linenos=true]{python}
 df=pd.read_csv('UnitedStatesForestry.csv')
 display(df.columns)
@@ -748,7 +755,7 @@ display(len(df))
 \end{minted}
 
 \section{Bibliography}
-\label{sec:org0f130b8}
+\label{sec:orge37f3a1}
 \bibliography{biblio}
 \bibliographystyle{IEEEtran}
 \end{document}
